@@ -328,10 +328,11 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       <String>['37'],
     },
     CardType.discover: <List<String>>{
+      //CONFLITO
       <String>['6011'],
-      <String>['622126', '622925'],
-      <String>['644', '649'],
-      <String>['65']
+      <String>['64'],
+      <String>['65'],
+      <String>['622']
     },
     CardType.mastercard: <List<String>>{
       <String>['51', '55'],
@@ -342,6 +343,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       <String>['2720'],
     },
     CardType.elo: <List<String>>{
+      //CONFLITO TUDO
       <String>['636368', '438935'],
       <String>['504175', '451416'],
       <String>['509048', '509067'],
@@ -353,10 +355,12 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       <String>['509042', '509047'],
       <String>['509052', '509043'],
       <String>['509040', '509064'],
+      <String>['636369', '636267'],
+      <String>['5067', '4576'],
+      <String>['4011', '506699'],
     },
     CardType.dinersClub: <List<String>>{
       <String>['36'],
-      <String>['38'],
       <String>['301'],
       <String>['302'],
       <String>['303'],
@@ -376,7 +380,6 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       <String>['637612'],
     },
     CardType.hipercard: <List<String>>{
-      <String>['38'],
       <String>['60'],
       <String>['6092'],
     },

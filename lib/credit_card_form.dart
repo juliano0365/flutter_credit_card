@@ -136,53 +136,29 @@ class _CreditCardFormState extends State<CreditCardForm> {
                   color: widget.textColor,
                 ),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(color: Colors.black54)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(color: Colors.black54)
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(color: Colors.black54)
+                  ),
+                  hintStyle: TextStyle(
+                      color: Colors.black54
+                  ),
+                  labelStyle: TextStyle(
+                      color: Colors.black54
+                  ),
                   labelText: 'Número do Cartão',
                   hintText: 'XXXX XXXX XXXX XXXX',
                 ),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextFormField(
-                controller: _expiryDateController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
-                ),
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Data de Validade',
-                    hintText: 'MM/AA'),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextField(
-                focusNode: cvvFocusNode,
-                controller: _cvvCodeController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'CVV',
-                  hintText: 'XXXX',
-                ),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-                onChanged: (String text) {
-                  setState(() {
-                    cvvCode = text;
-                  });
-                },
               ),
             ),
             Container(
@@ -195,13 +171,110 @@ class _CreditCardFormState extends State<CreditCardForm> {
                   color: widget.textColor,
                 ),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nome',
-                  hintText: 'Nome como no Cartão'
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.black54)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.black54)
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(color: Colors.black54)
+                    ),
+                    hintStyle: TextStyle(
+                        color: Colors.black54
+                    ),
+                    labelStyle: TextStyle(
+                        color: Colors.black54
+                    ),
+                    labelText: 'Nome',
+                    hintText: 'Nome como no Cartão'
                 ),
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                  child: TextFormField(
+                    controller: _expiryDateController,
+                    cursorColor: widget.cursorColor ?? themeColor,
+                    style: TextStyle(
+                      color: widget.textColor,
+                    ),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.black54)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.black54)
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.black54)
+                        ),
+                        hintStyle: TextStyle(
+                            color: Colors.black54
+                        ),
+                        labelStyle: TextStyle(
+                            color: Colors.black54
+                        ),
+                        labelText: 'Data de Validade',
+                        hintText: 'MM/AA'),
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                  child: TextField(
+                    focusNode: cvvFocusNode,
+                    controller: _cvvCodeController,
+                    cursorColor: widget.cursorColor ?? themeColor,
+                    style: TextStyle(
+                      color: widget.textColor,
+                    ),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.black54)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.black54)
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.black54)
+                      ),
+                      hintStyle: TextStyle(
+                          color: Colors.black54
+                      ),
+                      labelStyle: TextStyle(
+                          color: Colors.black54
+                      ),
+                      labelText: 'CVV',
+                      hintText: 'XXXX',
+                    ),
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    onChanged: (String text) {
+                      setState(() {
+                        cvvCode = text;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
         ),
