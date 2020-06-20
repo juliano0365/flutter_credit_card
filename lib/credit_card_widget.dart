@@ -496,7 +496,14 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
     } else {
       isAmex = false;
     }
-    icon = Image.asset('icon/${marcaCartao.toLowerCase()}.png', height: 48, width: 48, package: 'flutter_credit_card');
+    if(marcaCartao == null) {
+      icon = Container(
+        height: 48,
+        width: 48,
+      );
+    } else {
+      icon = Image.asset('icon/${marcaCartao.toLowerCase()}.png', height: 48, width: 48, package: 'flutter_credit_card');
+    }
 
     return icon;
   }
