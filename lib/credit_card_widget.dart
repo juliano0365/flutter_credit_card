@@ -14,7 +14,7 @@ class CreditCardWidget extends StatefulWidget {
     this.height,
     this.width,
     this.textStyle,
-    this.cardBgColor = const Color(0xff1b447b),
+    this.cardBgColor = const Color(0xff0B0B0F),
   })  : assert(cardNumber != null),
         assert(showBackView != null),
         super(key: key);
@@ -291,7 +291,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
               padding: const EdgeInsets.only(left: 16),
               child: Text(
                 widget.expiryDate.isEmpty || widget.expiryDate == null
-                    ? 'MM/YY'
+                    ? 'MM/AA'
                     : widget.expiryDate,
                 style: widget.textStyle ?? defaultTextStyle,
               ),
@@ -302,7 +302,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Text(
                 widget.cardHolderName.isEmpty || widget.cardHolderName == null
-                    ? 'CARD HOLDER'
+                    ? 'NOME'
                     : widget.cardHolderName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -340,6 +340,45 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       <String>['23', '26'],
       <String>['270', '271'],
       <String>['2720'],
+    },
+    CardType.elo: <List<String>>{
+      <String>['636368', '438935'],
+      <String>['504175', '451416'],
+      <String>['509048', '509067'],
+      <String>['509049', '509069'],
+      <String>['509050', '509074'],
+      <String>['509068', '509040'],
+      <String>['509045', '509051'],
+      <String>['509046', '509066'],
+      <String>['509042', '509047'],
+      <String>['509052', '509043'],
+      <String>['509040', '509064'],
+    },
+    CardType.dinersClub: <List<String>>{
+      <String>['36'],
+      <String>['38'],
+      <String>['301'],
+      <String>['302'],
+      <String>['303'],
+      <String>['305'],
+    },
+    CardType.jcb: <List<String>>{
+      <String>['35'],
+    },
+    CardType.aura: <List<String>>{
+      <String>['50'],
+    },
+    CardType.hiper: <List<String>>{
+      <String>['637095'],
+      <String>['637568'],
+      <String>['637599'],
+      <String>['637609'],
+      <String>['637612'],
+    },
+    CardType.hipercard: <List<String>>{
+      <String>['38'],
+      <String>['60'],
+      <String>['6092'],
     },
   };
 
@@ -398,6 +437,66 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
   Widget getCardTypeIcon(String cardNumber) {
     Widget icon;
     switch (detectCCType(cardNumber)) {
+      case CardType.jcb:
+        icon = Image.asset(
+          'icons/jcb.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.hipercard:
+        icon = Image.asset(
+          'icons/hipercard.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.hiper:
+        icon = Image.asset(
+          'icons/hiper.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.elo:
+        icon = Image.asset(
+          'icons/elo.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.dinersClub:
+        icon = Image.asset(
+          'icons/diners_club.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.aura:
+        icon = Image.asset(
+          'icons/aura.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
       case CardType.visa:
         icon = Image.asset(
           'icons/visa.png',
@@ -435,7 +534,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
           width: 48,
           package: 'flutter_credit_card',
         );
-        isAmex = false;
+        isAmex = true;
         break;
 
       default:
@@ -605,4 +704,10 @@ enum CardType {
   visa,
   americanExpress,
   discover,
+  elo,
+  dinersClub,
+  jcb,
+  aura,
+  hipercard,
+  hiper,
 }
