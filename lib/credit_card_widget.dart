@@ -490,19 +490,114 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
 
   Widget getCardTypeIcon(String cardNumber) {
     Widget icon;
-    String marcaCartao = getCardBrand(cardNumber);
-    if(marcaCartao == 'AmericanExpress' || marcaCartao == 'Discover'){
-      isAmex = true;
-    } else {
-      isAmex = false;
-    }
-    if(marcaCartao == null) {
-      icon = Container(
-        height: 48,
-        width: 48,
-      );
-    } else {
-      icon = Image.asset('icon/${marcaCartao.toLowerCase()}.png', height: 48, width: 48, package: 'flutter_credit_card');
+    switch (detectCCType(cardNumber)) {
+      case CardType.jcb:
+        icon = Image.asset(
+          'icons/jcb.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.hipercard:
+        icon = Image.asset(
+          'icons/hipercard.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.hiper:
+        icon = Image.asset(
+          'icons/hiper.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.elo:
+        icon = Image.asset(
+          'icons/elo.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.dinersClub:
+        icon = Image.asset(
+          'icons/diners_club.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.aura:
+        icon = Image.asset(
+          'icons/aura.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.visa:
+        icon = Image.asset(
+          'icons/visa.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.americanExpress:
+        icon = Image.asset(
+          'icons/americanexpress.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = true;
+        break;
+
+      case CardType.mastercard:
+        icon = Image.asset(
+          'icons/mastercard.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = false;
+        break;
+
+      case CardType.discover:
+        icon = Image.asset(
+          'icons/discover.png',
+          height: 48,
+          width: 48,
+          package: 'flutter_credit_card',
+        );
+        isAmex = true;
+        break;
+
+      default:
+        icon = Container(
+          height: 48,
+          width: 48,
+        );
+        isAmex = false;
+        break;
     }
 
     return icon;
