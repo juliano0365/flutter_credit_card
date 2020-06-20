@@ -318,77 +318,85 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
   /// Credit Card prefix patterns as of March 2019
   /// A [List<String>] represents a range.
   /// i.e. ['51', '55'] represents the range of cards starting with '51' to those starting with '55'
-  Map<CardType, Set<List<String>>> cardNumPatterns =
-  <CardType, Set<List<String>>>{
-    CardType.visa: <List<String>>{
-      <String>['4'],
+  Map<CardType, Set<List<String>>> cardNumPatterns = {
+    CardType.aura: {
+      ['50'],
     },
-    CardType.americanExpress: <List<String>>{
-      <String>['34'],
-      <String>['37'],
+    CardType.visa: {
+      ['4'],
     },
-    CardType.discover: <List<String>>{
-      //CONFLITO
-      <String>['6011'],
-      <String>['64'],
-      <String>['65'],
-      <String>['622']
+    CardType.americanExpress: {
+      ['34'],
+      ['37'],
     },
-    CardType.mastercard: <List<String>>{
-      <String>['51', '55'],
-      <String>['2221', '2229'],
-      <String>['223', '229'],
-      <String>['23', '26'],
-      <String>['270', '271'],
-      <String>['2720'],
+    CardType.discover: {
+      ['6011'],
+      ['64'],
+      ['644', '649'],
+      ['65'],
     },
-    CardType.elo: <List<String>>{
-      //CONFLITO TUDO
-      <String>['636368', '438935'],
-      <String>['504175', '451416'],
-      <String>['509048', '509067'],
-      <String>['509049', '509069'],
-      <String>['509050', '509074'],
-      <String>['509068', '509040'],
-      <String>['509045', '509051'],
-      <String>['509046', '509066'],
-      <String>['509042', '509047'],
-      <String>['509052', '509043'],
-      <String>['509040', '509064'],
-      <String>['636369', '636267'],
-      <String>['5067', '4576'],
-      <String>['4011', '506699'],
+    CardType.mastercard: {
+      ['51', '55'],
+      ['2221', '2229'],
+      ['223', '229'],
+      ['23', '26'],
+      ['270', '271'],
+      ['2720'],
     },
-    CardType.dinersClub: <List<String>>{
-      <String>['36'],
-      <String>['301'],
-      <String>['302'],
-      <String>['303'],
-      <String>['305'],
+    CardType.dinersClub: {
+      ['30'],
+      ['300', '305'],
+      ['36'],
+      ['38'],
+      ['39'],
     },
-    CardType.jcb: <List<String>>{
-      <String>['35'],
+    CardType.jcb: {
+      ['3506', '3589'],
+      ['2131'],
+      ['1800'],
     },
-    CardType.aura: <List<String>>{
-      <String>['50'],
+    CardType.elo: {
+      ['4011'],
+      ['401178'],
+      ['401179'],
+      ['438935'],
+      ['457631'],
+      ['457632'],
+      ['431274'],
+      ['451416'],
+      ['457393'],
+      ['504175'],
+      ['506699', '506778'],
+      ['509000', '509999'],
+      ['627780'],
+      ['636297'],
+      ['636368'],
+      ['650031', '650033'],
+      ['650035', '650051'],
+      ['650405', '650439'],
+      ['650485', '650538'],
+      ['650541', '650598'],
+      ['650700', '650718'],
+      ['650720', '650727'],
+      ['650901', '650978'],
+      ['651652', '651679'],
+      ['655000', '655019'],
+      ['655021', '655058'],
+      ['6555'],
     },
-    CardType.hiper: <List<String>>{
-      <String>['637095'],
-      <String>['637568'],
-      <String>['637599'],
-      <String>['637609'],
-      <String>['637612'],
+    CardType.hiper: {
+      ['637095'],
+      ['637568'],
+      ['637599'],
+      ['637609'],
+      ['637612'],
     },
-    CardType.hipercard: <List<String>>{
-      <String>['60'],
-      <String>['6092'],
+    CardType.hipercard: {
+      ['6062'],
     },
   };
 
-  /// This function determines the Credit Card type based on the cardPatterns
-  /// and returns it.
   CardType detectCCType(String cardNumber) {
-    //Default card type is other
     CardType cardType = CardType.otherBrand;
 
     if (cardNumber.isEmpty) {
@@ -396,34 +404,26 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
     }
 
     cardNumPatterns.forEach(
-      (CardType type, Set<List<String>> patterns) {
+          (CardType type, Set<List<String>> patterns) {
         for (List<String> patternRange in patterns) {
-          // Remove any spaces
           String ccPatternStr =
-              cardNumber.replaceAll(RegExp(r'\s+\b|\b\s'), '');
+          cardNumber.replaceAll(RegExp(r'\s+\b|\b\s'), '');
           final int rangeLen = patternRange[0].length;
-          // Trim the Credit Card number string to match the pattern prefix length
           if (rangeLen < cardNumber.length) {
             ccPatternStr = ccPatternStr.substring(0, rangeLen);
           }
 
           if (patternRange.length > 1) {
-            // Convert the prefix range into numbers then make sure the
-            // Credit Card num is in the pattern range.
-            // Because Strings don't have '>=' type operators
             final int ccPrefixAsInt = int.parse(ccPatternStr);
             final int startPatternPrefixAsInt = int.parse(patternRange[0]);
             final int endPatternPrefixAsInt = int.parse(patternRange[1]);
             if (ccPrefixAsInt >= startPatternPrefixAsInt &&
                 ccPrefixAsInt <= endPatternPrefixAsInt) {
-              // Found a match
               cardType = type;
               break;
             }
           } else {
-            // Just compare the single pattern prefix with the Credit Card prefix
             if (ccPatternStr == patternRange[0]) {
-              // Found a match
               cardType = type;
               break;
             }
@@ -431,123 +431,72 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
         }
       },
     );
-
     return cardType;
   }
 
-  // This method returns the icon for the visa card type if found
-  // else will return the empty container
-  Widget getCardTypeIcon(String cardNumber) {
-    Widget icon;
-    switch (detectCCType(cardNumber)) {
+  String getCardBrand(String ccNumStr) {
+    String marcaCartao;
+    switch(detectCCType(ccNumStr)){
+
       case CardType.jcb:
-        icon = Image.asset(
-          'icons/jcb.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'JCB';
         break;
 
       case CardType.hipercard:
-        icon = Image.asset(
-          'icons/hipercard.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'Hipercard';
         break;
 
       case CardType.hiper:
-        icon = Image.asset(
-          'icons/hiper.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'Hiper';
         break;
 
       case CardType.elo:
-        icon = Image.asset(
-          'icons/elo.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'Elo';
         break;
 
       case CardType.dinersClub:
-        icon = Image.asset(
-          'icons/diners_club.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'DinersClub';
         break;
 
       case CardType.aura:
-        icon = Image.asset(
-          'icons/aura.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'Aura';
         break;
 
       case CardType.visa:
-        icon = Image.asset(
-          'icons/visa.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'Visa';
         break;
 
       case CardType.americanExpress:
-        icon = Image.asset(
-          'icons/amex.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = true;
+        marcaCartao = 'AmericanExpress';
         break;
 
       case CardType.mastercard:
-        icon = Image.asset(
-          'icons/mastercard.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = false;
+        marcaCartao = 'Mastercard';
         break;
 
       case CardType.discover:
-        icon = Image.asset(
-          'icons/discover.png',
-          height: 48,
-          width: 48,
-          package: 'flutter_credit_card',
-        );
-        isAmex = true;
+        marcaCartao = 'Discover';
+        break;
+
+      case CardType.otherBrand:
+        marcaCartao = null;
         break;
 
       default:
-        icon = Container(
-          height: 48,
-          width: 48,
-        );
-        isAmex = false;
-        break;
+        marcaCartao = null;
     }
+    return marcaCartao;
+  }
+
+  Widget getCardTypeIcon(String cardNumber) {
+    Widget icon;
+    String marcaCartao = getCardBrand(cardNumber);
+    if(marcaCartao == 'AmericanExpress' || marcaCartao == 'Discover'){
+      isAmex = true;
+    } else {
+      isAmex = false;
+    }
+    icon = Image.asset('icon/${marcaCartao.toLowerCase()}.png', height: 48, width: 48, package: 'flutter_credit_card');
 
     return icon;
   }
